@@ -4,7 +4,9 @@
  # un script de bash, aunque se ejecute desde otro shell.
 
 echo "Este es el primer comando"
-echo" "Tras 5 segundos verás un listado del directorio actual"
-sleep 5s
-ls --color
+echo "Tras 5 segundos verás un listado del directorio actual"
+sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+sudo yum install php56w php56w-opcache
+sudo systemctl restart httpd
 echo "Fin del ejemplo"
