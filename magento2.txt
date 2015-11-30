@@ -42,7 +42,7 @@ sudo mysql_secure_installation
 echo "***********Ingresar a la consola ******"
 mysql -u root -p
 #================
-#INSTALAR PHPMYADMIN
+echo "INSTALAR PHPMYADMIN"
 #opcional  sudo yum install epel-release
 sudo yum -y install phpmyadmin
 sudo nano /etc/httpd/conf.d/phpMyAdmin.conf
@@ -52,6 +52,9 @@ echo "require ip - allow from"
 #Require ip your_workstation_IP_address
 #==
 #Allow from your_workstation_IP_address mi ip dondes yo quiero administrar what's my ip address
+grep -i allow from /etc/httpd/conf.d/phpMyAdmin.conf
+grep -i require ip /etc/httpd/conf.d/phpMyAdmin.conf
+
 echo "Comprobar en el navegador con root y pass de root mysql"
 #=====================
 echo "******INSTALANDO MAgento******"
@@ -72,20 +75,22 @@ cd magento/
 unzip Magento-CE-2.0.0-2015-11-17-05-47-46.zip
 
 sudo chmod -R  777 /var/www/html/magento
+
+
 sudo systemctl restart httpd
 #=====================
 
 #Talvez , poner esta linea puede ocasionar error locate *
 #sudo yum -y remove php-common
 #(si hay problema de load soap)
-sudo yum --assumeyes install php56w-soap
+#sudo yum --assumeyes install php56w-soap  <<<<<
 
 sudo systemctl restart httpd 
 #(posiblemente phph.ini.sample var/report..)
 #Esta line es solucion a there before an error ver log xxx
 mv /var/www/html/magento/errors/local.xml.sample /var/www/html/magento/errors/local.xml 
 #=====hasta aqui
-#instalar mod_rewrite
+echo "instalar mod_rewrite"
 #http://www.ewhathow.com/2013/09/how-to-enable-mod_rewrite-on-apache/   para caragar modrewrite
 sudo nano /etc/httpd/conf/httpd.conf
 #==  LoadModule rewrite_module modules/mod_rewrite.so  ==
@@ -93,7 +98,6 @@ grep -i AllowOverride /etc/httpd/conf/httpd.conf
 #Si sale Noe hay que reemplazar por allowoverrido none == > All
 sudo nano /etc/httpd/conf/httpd.conf
 grep -i AllowOverride /etc/httpd/conf/httpd.conf
-
 
 sudo systemctl restart httpd 
 #Como volver a reinstalar magento
@@ -105,7 +109,7 @@ sudo systemctl restart httpd
 #ERROR mysql.sock (2) http://stackoverflow.com/questions/16325607/cant-connect-to-local-mysql-server-through-socket-tmp-mysql-sock
 #mysql_config --socket
 #Esto es xq no existe mysql.sock
-***
+#***
 #====MAGENTo2
 #instalar y dar permisos 777(error page 500)
 #sudo nano ./lib/internal/Cm/Cache/Backend/File.php  igual que el de arriba
@@ -128,19 +132,19 @@ sudo systemctl restart httpd
 #Saber si puedo ingresar a la consola con usaurios y pasword
 #mysqladmin -u root -p status
 
-======OTRA INSTALACION=======
+#======OTRA INSTALACION=======
 
-http://www.liberiangeek.net/2014/09/install-magento-ecommerce-software-centos-7/
+#http://www.liberiangeek.net/2014/09/install-magento-ecommerce-software-centos-7/
 
-encontrar la direccion correcta al rpm
-sudo systemctl restart firewalld.service
-ERROR
-soap must be loaded
+#encontrar la direccion correcta al rpm
+#sudo systemctl restart firewalld.service
+#ERROR
+#soap must be loaded
 sudo yum -y install php-soap
 
-mbstring must be loaded
-sudo yum -y install php-mbstring
-el allowoverride all (pilas ahi)
+#mbstring must be loaded
+#sudo yum -y install php-mbstring
+#el allowoverride all (pilas ahi)
 
 echo "CREAR LA BASE DE DATOS"
 
@@ -148,6 +152,8 @@ echo "CREAR LA BASE DE DATOS"
 #Al ultimo se haces eso despues e instalar probaly
 cd /var/www/html/magento/bin
 sudo chmod -R 777 /var/www/html/magento/
-php magento indexer:reindex
-echo ""
+echo "INstalar magento y luego colocar esta linea"
+#Error indexer crown
+#php magento indexer:reindex
+echo "instalar y poner php magento indexer:reindex"
 
