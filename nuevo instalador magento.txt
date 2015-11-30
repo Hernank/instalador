@@ -1,0 +1,139 @@
+#Forma de buscar un atributo
+#grep -i memory_limit /etc/php.ini
+#info de  disco duro 
+Lsblk
+#info de ram y uso 
+#free -m
+#info tiempo real us de ram
+#top
+#INSTALAR PHP 5.6 u httpd 2.4
+#https://webtatic.com/packages/php56/
+sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+sudo yum -y install php56w php56w-opcache
+
+#Incrementar memoria a php
+sudo nano /etc/php.ini
+#http://tutorials.hostucan.net/how-to-increase-php-memory-limit/   /etc/php.ini
+#<?php phpinfo(); ?> para ver la info de memoria limit
+
+#NOta :posible error locale* si no va esta nano
+#==
+#memoria limit 768m
+#set (always_populate_raw_post_data = -1) descomentar
+#disable asp_tags
+sudo systemctl restart httpd
+#PROBAR en el navegador
+#===========
+
+#INSTALAR MYSQL 5.6
+#http://sharadchhetri.com/2014/07/31/how-to-install-mysql-server-5-6-on-centos-7-rhel-7/   posible carga de mowrewrite
+sudo yum -y install wget
+sudo wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
+sudo ls -1 /etc/yum.repos.d/mysql-community*
+#mensaje mostrado 
+sudo yum -y install mysql-server
+sudo systemctl start mysqld
+sudo systemctl enable mysqld
+sudo mysql_secure_installation
+mysql -u root -p
+#================
+#INSTALAR PHPMYADMIN
+#opcional  sudo yum install epel-release
+sudo yum -y install phpmyadmin
+sudo nano /etc/httpd/conf.d/phpMyAdmin.conf
+#=====
+#Require ip your_workstation_IP_address
+#==
+#Allow from your_workstation_IP_address mi ip dondes yo quiero administrar what's my ip address
+#Comprobar en el navegador con root y pass de root mysql
+#=====================
+#INSTALANDO MAgento
+sudo yum -y install unzip
+sudo yum -y install git
+sudo yum -y install  php56w-xml php56w-mcrypt php56w-gd php56w-devel php56w-mysql php56w-intl php56w-mbstring php56w-bcmath
+
+cd /var/www/html
+sudo chmod -R 777 /var/www/html/
+git clone https://github.com/Hernank/instalador.git
+ls
+#(x si acaso chmod 777 /var/www/html)
+mkdir magento
+cp instalador/magento-1.9.2.2-2015-10-27-03-14-30.zip  magento/
+cd magento/
+unzip magento-1.9.2.2-2015-10-27-03-14-30.zip
+
+sudo chmod -R  777 /var/www/html/magento
+sudo systemctl restart httpd
+#=====================
+
+#Talvez , poner esta linea puede ocasionar error locate *
+#sudo yum -y remove php-common
+#(si hay problema de load soap)
+sudo yum --assumeyes install php56w-soap
+
+sudo systemctl restart httpd 
+#(posiblemente phph.ini.sample var/report..)
+#Esta line es solucion a there before an error ver log xxx
+mv /var/www/html/magento/errors/local.xml.sample /var/www/html/magento/errors/local.xml 
+#=====hasta aqui
+#instalar mod_rewrite
+#http://www.ewhathow.com/2013/09/how-to-enable-mod_rewrite-on-apache/   para caragar modrewrite
+sudo nano /etc/httpd/conf/httpd.conf
+#==  LoadModule rewrite_module modules/mod_rewrite.so  ==
+grep -i AllowOverride /etc/httpd/conf/httpd.conf
+#Si sale Noe hay que reemplazar por allowoverrido none == > All
+sudo nano /etc/httpd/conf/httpd.conf
+grep -i AllowOverride /etc/httpd/conf/httpd.conf
+
+grep -i AllowOverride /etc/httpd/conf/httpd.conf
+sudo systemctl restart httpd 
+#Como volver a reinstalar magento
+#/etc/local.xml  un rm
+
+#ERROR: Exception printing is disabled by default for security reasons.
+#http://support.hostgator.com/articles/specialized-help/technical/magento-install-error-exception-printing-is-disabled
+#****
+#ERROR mysql.sock (2) http://stackoverflow.com/questions/16325607/cant-connect-to-local-mysql-server-through-socket-tmp-mysql-sock
+#mysql_config --socket
+#Esto es xq no existe mysql.sock
+***
+#====MAGENTo2
+#instalar y dar permisos 777(error page 500)
+#sudo nano ./lib/internal/Cm/Cache/Backend/File.php  igual que el de arriba
+#==============
+#ERROR Magento 1.9.2 Unknown cipher in list: TLSv1 [duplicate]
+#http://magento.stackexchange.com/questions/73748/magento-1-9-2-unknown-cipher-in-list-tlsv1
+#In /var/www/html/magento/downloader/lib/Mage/HTTP/Client/Curl.php, try changing:
+
+#$this->curlOption(CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+#to
+
+#$this->curlOption(CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1);
+#not need restart httpd
+#====
+#Sabe el status de mysql(solucion al eror http://stackoverflow.com/questions/5376427/cant-connect-to-local-mysql-server-through-socket-var-mysql-mysql-sock-38)
+#es posible que no exista /var/lib/mysql/mysql.sock
+#otro es /etc/my.conf
+#https://bugs.mysql.com/bug.php?id=4174
+#mysqladmin -u root -p status
+#Saber si puedo ingresar a la consola con usaurios y pasword
+#mysqladmin -u root -p status
+
+======OTRA INSTALACION=======
+
+http://www.liberiangeek.net/2014/09/install-magento-ecommerce-software-centos-7/
+
+encontrar la direccion correcta al rpm
+sudo systemctl restart firewalld.service
+ERROR
+soap must be loaded
+sudo yum -y install php-soap
+
+mbstring must be loaded
+sudo yum -y install php-mbstring
+el allowoverride all (pilas ahi)
+
+
+

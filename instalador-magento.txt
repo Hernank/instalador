@@ -79,4 +79,23 @@ disable asp_tags
 ===
 sudo yum remove php-common
 yum --assumeyes install php56w-soap(si hay problema de load soap)
-mv magento/errors/local.xml.sample local.xml(posiblemente phph.ini.sample var/report..)
+mv magento/errors/local.xml.sample magento/errors/local.xml(posiblemente phph.ini.sample var/report..)
+http://www.ewhathow.com/2013/09/how-to-enable-mod_rewrite-on-apache/   para caragar modrewrite
+sudo systemctl restart httpd 
+reinstalar app/etc/local.xml  un rm
+
+ERROR: Exception printing is disabled by default for security reasons.
+http://support.hostgator.com/articles/specialized-help/technical/magento-install-error-exception-printing-is-disabled
+
+
+
+
+
+
+
+
+
+
+====MAGENTo2
+instalar y dar permisos 777
+sudo nano ./lib/internal/Cm/Cache/Backend/File.php  igual que el de arriba
