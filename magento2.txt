@@ -6,7 +6,7 @@
 #free -m
 #info tiempo real us de ram
 #top
-
+cd
 #INSTALAR PHP 5.6 u httpd 2.4
 #https://webtatic.com/packages/php56/
 sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -60,15 +60,16 @@ echo "Comprobar en el navegador con root y pass de root mysql"
 #=====================
 echo "******INSTALANDO MAgento******"
 sudo yum -y install unzip
-sudo yum -y install git
+#|||sudo yum -y install git
 sudo yum -y install  php56w-xml php56w-mcrypt php56w-gd php56w-devel php56w-mysql php56w-intl php56w-mbstring php56w-bcmath
 
 cd /var/www/html
 sudo chmod -R 777 /var/www/html/
-git clone https://github.com/Hernank/instalador.git
+#|||git clone https://github.com/Hernank/instalador.git
 ls
 #(x si acaso chmod 777 /var/www/html)
 mkdir magento
+cd
 #cp instalador/magento-1.9.2.2-2015-10-27-03-14-30.zip  magento/
 cp instalador/Magento-CE-2.0.0-2015-11-17-05-47-46.zip  magento/
 cd magento/
