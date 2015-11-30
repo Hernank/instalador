@@ -71,8 +71,8 @@ ls
 mkdir magento
 cd
 #cp instalador/magento-1.9.2.2-2015-10-27-03-14-30.zip  magento/
-cp instalador/Magento-CE-2.0.0-2015-11-17-05-47-46.zip  magento/
-cd magento/
+cp instalador/Magento-CE-2.0.0-2015-11-17-05-47-46.zip  /var/www/html/magento/
+cd /var/www/html/magento/
 #unzip Magento-CE-2.0.0-2015-11-17-05-47-46.zip
 unzip Magento-CE-2.0.0-2015-11-17-05-47-46.zip
 
@@ -90,7 +90,7 @@ sudo systemctl restart httpd
 sudo systemctl restart httpd 
 #(posiblemente phph.ini.sample var/report..)
 #Esta line es solucion a there before an error ver log xxx
-mv /var/www/html/magento/errors/local.xml.sample /var/www/html/magento/errors/local.xml 
+#mv /var/www/html/magento/errors/local.xml.sample /var/www/html/magento/errors/local.xml 
 #=====hasta aqui
 echo "instalar mod_rewrite"
 #http://www.ewhathow.com/2013/09/how-to-enable-mod_rewrite-on-apache/   para caragar modrewrite
